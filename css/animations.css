@@ -1,0 +1,87 @@
+@keyframes glowPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.6; }
+  50%       { transform: translate(-50%, -50%) scale(1.18); opacity: 1;   }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes blinkDot {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.4; transform: scale(0.85); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translate(26px, -50%); }
+  to   { opacity: 1; transform: translate(0, -50%);    }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+.status-badge { animation: fadeInUp 0.7s 0.05s ease both; }
+.hero-tag     { animation: fadeInUp 0.7s 0.12s ease both; }
+h1            { animation: fadeInUp 0.8s 0.20s ease both; }
+.hero-sub     { animation: fadeInUp 0.7s 0.30s ease both; }
+.hero-cta     { animation: fadeInUp 0.7s 0.38s ease both; }
+
+.terminal {
+  animation: fadeInRight 1s 0.6s ease both;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skills-grid .skill-card:nth-child(1).reveal { transition-delay: 0.00s; }
+.skills-grid .skill-card:nth-child(2).reveal { transition-delay: 0.08s; }
+.skills-grid .skill-card:nth-child(3).reveal { transition-delay: 0.16s; }
+.skills-grid .skill-card:nth-child(4).reveal { transition-delay: 0.24s; }
+
+.certs-grid .cert-card:nth-child(1).reveal { transition-delay: 0.00s; }
+.certs-grid .cert-card:nth-child(2).reveal { transition-delay: 0.12s; }
+
+.projects-grid .project-card:nth-child(1).reveal { transition-delay: 0.00s; }
+.projects-grid .project-card:nth-child(2).reveal { transition-delay: 0.08s; }
+.projects-grid .project-card:nth-child(3).reveal { transition-delay: 0.16s; }
+.projects-grid .project-card:nth-child(4).reveal { transition-delay: 0.24s; }
+
+.section-label {
+  animation: slideIn 0.5s ease both;
+}
+
+.btn-primary {
+  box-shadow: 0 0 0 rgba(0,229,160,0);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 24px rgba(0,229,160,0.25);
+}
+
+.btn-outline {
+  box-shadow: 0 0 0 rgba(124,106,247,0);
+  transition: border-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.btn-outline:hover {
+  box-shadow: 0 6px 24px rgba(124,106,247,0.15);
+}
+
+.page-fade {
+  animation: fadeInUp 0.5s ease both;
+}

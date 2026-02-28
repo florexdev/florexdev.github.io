@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="tr" data-lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="florexdev — Frontend & Masaüstü Uygulama Geliştirici Portföyü" />
+  <title>florexdev</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
+
+  <nav id="navbar">
+    <a href="#" class="logo">florex<span>dev</span></a>
+
+    <ul class="nav-links">
+      <li><a href="#about"    data-tr="Hakkımda"  data-en="About">Hakkımda</a></li>
+      <li><a href="#skills"   data-tr="Beceriler" data-en="Skills">Beceriler</a></li>
+      <li><a href="#certs"    data-tr="Sertifikalar" data-en="Certificates">Sertifikalar</a></li>
+      <li><a href="#projects" data-tr="Projeler"  data-en="Projects">Projeler</a></li>
+      <li><a href="#contact"  data-tr="İletişim"  data-en="Contact">İletişim</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" aria-label="Toggle language">
+        <span class="lang-tr active">TR</span>
+        <span class="lang-sep">/</span>
+        <span class="lang-en">EN</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#about"    data-tr="Hakkımda"     data-en="About"        class="mobile-link">Hakkımda</a></li>
+      <li><a href="#skills"   data-tr="Beceriler"    data-en="Skills"       class="mobile-link">Beceriler</a></li>
+      <li><a href="#certs"    data-tr="Sertifikalar" data-en="Certificates" class="mobile-link">Sertifikalar</a></li>
+      <li><a href="#projects" data-tr="Projeler"     data-en="Projects"     class="mobile-link">Projeler</a></li>
+      <li><a href="#contact"  data-tr="İletişim"     data-en="Contact"      class="mobile-link">İletişim</a></li>
+    </ul>
+  </div>
+
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-content">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span data-tr="Staj Başvurularına Açık" data-en="Open to Internship Applications">Staj Başvurularına Açık</span>
+      </div>
+
+      <div class="hero-tag">
+        <span data-tr="// bilgisayar programcılığı öğrencisi" data-en="// computer programming student">// bilgisayar programcılığı öğrencisi</span>
+      </div>
+
+      <h1>
+        Frontend &amp;<br />
+        <span class="accent" data-tr="Masaüstü" data-en="Desktop">Masaüstü</span><br />
+        <span class="accent2" data-tr="Geliştirici" data-en="Developer">Geliştirici</span>
+      </h1>
+
+      <p class="hero-sub">
+        <span data-tr="Bilecik Şeyh Edebali Üniversitesi" data-en="Bilecik Şeyh Edebali University">Bilecik Şeyh Edebali Üniversitesi</span>
+        <strong> Söğüt MYO</strong>
+        <span data-tr="'da okuyorum. Web arayüzleri ve masaüstü uygulamalar üzerine çalışıyorum." data-en="— studying Computer Programming. I build web interfaces and desktop applications.">'da okuyorum. Web arayüzleri ve masaüstü uygulamalar üzerine çalışıyorum.</span>
+      </p>
+
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">
+          <span data-tr="→ Projeleri Gör" data-en="→ View Projects">→ Projeleri Gör</span>
+        </a>
+        <a href="#contact" class="btn btn-outline">
+          <span data-tr="İletişime Geç" data-en="Get In Touch">İletişime Geç</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="term-bar">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+        <span class="term-title">florexdev ~ terminal</span>
+      </div>
+      <div class="term-body">
+        <div class="term-line"><span class="prompt">→</span><span class="cmd"> whoami</span></div>
+        <div class="out" data-tr="Bilgisayar Programcılığı Öğrencisi" data-en="Computer Programming Student">Bilgisayar Programcılığı Öğrencisi</div>
+        <div class="term-line"><span class="prompt">→</span><span class="cmd"> cat skills.txt</span></div>
+        <div class="out"><span class="hl">HTML/CSS</span> · <span class="hl">JS/jQuery</span> · <span class="hl">PHP</span></div>
+        <div class="out"><span class="hl">C#</span> · <span class="hl">Python</span></div>
+        <div class="term-line"><span class="prompt">→</span><span class="cmd"> cat certs.txt</span></div>
+        <div class="out"><span class="hl" data-tr="Yazılım Geliştirme" data-en="Software Development">Yazılım Geliştirme</span> · <span class="hl">Frontend</span></div>
+        <div class="out" style="color:#5a5a7a" data-tr="via BTK Akademi" data-en="via BTK Academy">via BTK Akademi</div>
+        <div class="term-line"><span class="prompt">→</span><span class="cmd"> echo $STATUS</span></div>
+        <div class="out" style="color:var(--accent)" data-tr="Staj arıyorum 🟢" data-en="Looking for internship 🟢">Staj arıyorum 🟢</div>
+        <div class="term-line"><span class="prompt">→</span><span class="cmd"> <span class="cursor-blink"></span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-label">// 01 — <span data-tr="hakkımda" data-en="about">hakkımda</span></div>
+    <div class="section-title" data-tr="Kim Olduğum" data-en="Who I <span>Am</span>">Kim <span>Olduğum</span></div>
+
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          <span data-tr="Merhaba! Ben " data-en="Hi! I'm ">Merhaba! Ben </span>
+          <strong>florexdev</strong>,
+          <span data-tr=" Bilecik Şeyh Edebali Üniversitesi Söğüt MYO'da " data-en=" studying at Bilecik Şeyh Edebali University Söğüt MYO, "> Bilecik Şeyh Edebali Üniversitesi Söğüt MYO'da </span>
+          <strong data-tr="Bilgisayar Programcılığı" data-en="Computer Programming">Bilgisayar Programcılığı</strong>
+          <span data-tr=" okuyorum." data-en=" department."> okuyorum.</span>
+        </p>
+        <p>
+          <strong data-tr="Frontend geliştirme" data-en="Frontend development">Frontend geliştirme</strong>
+          <span data-tr=" ve " data-en=" and "> ve </span>
+          <strong data-tr="masaüstü uygulama geliştirme" data-en="desktop application development">masaüstü uygulama geliştirme</strong>
+          <span data-tr=" alanlarında kendimi geliştiriyorum. HTML, CSS, JavaScript ve jQuery ile modern web arayüzleri; C# ile masaüstü uygulamalar geliştiriyorum." data-en=" are my main focus areas. I build modern web interfaces with HTML, CSS, JavaScript, jQuery and desktop applications with C#."> alanlarında kendimi geliştiriyorum. HTML, CSS, JavaScript ve jQuery ile modern web arayüzleri; C# ile masaüstü uygulamalar geliştiriyorum.</span>
+        </p>
+        <p>
+          <span data-tr="PHP ile sunucu tarafı, Python ile scripting ve otomasyon konularında da çalışmalarım bulunuyor. BTK Akademi'den 2 sertifikam var. Şu an staj deneyimi kazanmak istiyorum." data-en="I also work with PHP for server-side logic and Python for scripting. I have 2 certificates from BTK Academy. Currently looking for an internship opportunity.">PHP ile sunucu tarafı, Python ile scripting ve otomasyon konularında da çalışmalarım bulunuyor. BTK Akademi'den 2 sertifikam var. Şu an staj deneyimi kazanmak istiyorum.</span>
+        </p>
+      </div>
+
+      <div class="about-info reveal">
+        <div class="info-row">
+          <span class="info-key" data-tr="Üniversite" data-en="University">Üniversite</span>
+          <span class="info-val">Bilecik Şeyh Edebali Üni.</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key" data-tr="Bölüm" data-en="Department">Bölüm</span>
+          <span class="info-val" data-tr="Söğüt MYO — Bil. Programcılığı" data-en="Söğüt MYO — Computer Programming">Söğüt MYO — Bil. Programcılığı</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key" data-tr="Alan" data-en="Focus">Alan</span>
+          <span class="info-val" data-tr="Frontend + Masaüstü Uygulama" data-en="Frontend + Desktop App">Frontend + Masaüstü Uygulama</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key" data-tr="Sertifikalar" data-en="Certificates">Sertifikalar</span>
+          <span class="info-val" data-tr="2 × BTK Akademi" data-en="2 × BTK Academy">2 × BTK Akademi</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key" data-tr="Durum" data-en="Status">Durum</span>
+          <span class="info-val status-open" data-tr="Staj Arıyor ✓" data-en="Open to Internship ✓">Staj Arıyor ✓</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">GitHub</span>
+          <span class="info-val"><a href="https://github.com/florexdev" target="_blank" rel="noopener">github.com/florexdev</a></span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Website</span>
+          <span class="info-val"><a href="https://florexdev.com.tr" target="_blank" rel="noopener">florexdev.com.tr</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-label">// 02 — <span data-tr="beceriler" data-en="skills">beceriler</span></div>
+    <div class="section-title">
+      <span data-tr="Teknik " data-en="Technical ">Teknik </span><span class="accent2" data-tr="Yetenekler" data-en="Skills">Yetenekler</span>
+    </div>
+
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name" data-tr="Frontend Geliştirme" data-en="Frontend Development">Frontend Geliştirme</div>
+        <div class="skill-desc" data-tr="Responsive, modern web arayüzleri tasarlama ve geliştirme" data-en="Designing and developing responsive, modern web interfaces">Responsive, modern web arayüzleri tasarlama ve geliştirme</div>
+        <div class="skill-tags">
+          <span class="tag">HTML5</span><span class="tag">CSS3</span>
+          <span class="tag">JavaScript</span><span class="tag">jQuery</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🖥️</div>
+        <div class="skill-name" data-tr="Masaüstü Uygulama" data-en="Desktop Application">Masaüstü Uygulama</div>
+        <div class="skill-desc" data-tr="Windows platformu için masaüstü uygulamalar geliştirme" data-en="Building desktop applications for Windows platform">Windows platformu için masaüstü uygulamalar geliştirme</div>
+        <div class="skill-tags">
+          <span class="tag">C#</span><span class="tag">.NET</span><span class="tag">WinForms</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-name" data-tr="Backend & Scripting" data-en="Backend & Scripting">Backend & Scripting</div>
+        <div class="skill-desc" data-tr="Sunucu tarafı programlama ve otomasyon scriptleri" data-en="Server-side programming and automation scripts">Sunucu tarafı programlama ve otomasyon scriptleri</div>
+        <div class="skill-tags">
+          <span class="tag">PHP</span><span class="tag">Python</span><span class="tag">MySQL</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name" data-tr="UI / UX Tasarım" data-en="UI / UX Design">UI / UX Tasarım</div>
+        <div class="skill-desc" data-tr="Kullanıcı odaklı arayüz tasarımı ve prototipleme" data-en="User-centric interface design and prototyping">Kullanıcı odaklı arayüz tasarımı ve prototipleme</div>
+        <div class="skill-tags">
+          <span class="tag">CSS Animations</span><span class="tag">Responsive</span><span class="tag">Grid/Flex</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <div class="section-label">// 03 — <span data-tr="sertifikalar" data-en="certificates">sertifikalar</span></div>
+    <div class="section-title">
+      <span data-tr="BTK Akademi " data-en="BTK Academy ">BTK Akademi </span><span class="accent2" data-tr="Sertifikaları" data-en="Certificates">Sertifikaları</span>
+    </div>
+
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-header">
+          <div class="cert-logo">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#1a1a2e"/>
+              <text x="18" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="#00e5a0" font-family="monospace">BTK</text>
+            </svg>
+          </div>
+          <div class="cert-badge" data-tr="Tamamlandı" data-en="Completed">Tamamlandı</div>
+        </div>
+        <div class="cert-title" data-tr="Yazılım Geliştirme" data-en="Software Development">Yazılım Geliştirme</div>
+        <div class="cert-issuer">BTK Akademi</div>
+        <div class="cert-desc" data-tr="Yazılım geliştirme süreçleri, temel programlama kavramları ve uygulama geliştirme konularını kapsayan sertifika programı." data-en="Certificate program covering software development processes, fundamental programming concepts and application development.">Yazılım geliştirme süreçleri, temel programlama kavramları ve uygulama geliştirme konularını kapsayan sertifika programı.</div>
+        <div class="cert-tags">
+          <span class="tag" data-tr="Yazılım Geliştirme" data-en="Software Dev">Yazılım Geliştirme</span>
+          <span class="tag">BTK Akademi</span>
+        </div>
+        <div class="cert-footer">
+          <a href="#" class="cert-link" data-tr="Sertifikayı Görüntüle →" data-en="View Certificate →">Sertifikayı Görüntüle →</a>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-header">
+          <div class="cert-logo">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#1a1a2e"/>
+              <text x="18" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="#7c6af7" font-family="monospace">BTK</text>
+            </svg>
+          </div>
+          <div class="cert-badge cert-badge-purple" data-tr="Tamamlandı" data-en="Completed">Tamamlandı</div>
+        </div>
+        <div class="cert-title">Frontend</div>
+        <div class="cert-issuer">BTK Akademi</div>
+        <div class="cert-desc" data-tr="HTML, CSS ve JavaScript ile modern web arayüzleri geliştirmeyi kapsayan frontend geliştirici sertifika programı." data-en="Frontend developer certificate program covering modern web interface development with HTML, CSS and JavaScript.">HTML, CSS ve JavaScript ile modern web arayüzleri geliştirmeyi kapsayan frontend geliştirici sertifika programı.</div>
+        <div class="cert-tags">
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">BTK Akademi</span>
+        </div>
+        <div class="cert-footer">
+          <a href="#" class="cert-link" data-tr="Sertifikayı Görüntüle →" data-en="View Certificate →">Sertifikayı Görüntüle →</a>
+        </div>
+      </div>
+    </div>
+
+    
+  </section>
+
+  <section id="projects">
+    <div class="section-label">// 04 — <span data-tr="projeler" data-en="projects">projeler</span></div>
+    <div class="section-title">
+      <span data-tr="Çalışmalarım" data-en="My ">Çalışmalarım</span><span class="accent2" data-tr="" data-en="Projects"></span>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-num">// 001</div>
+        <div class="project-name" data-tr="SubTracker — Abonelik Takipçisi" data-en="SubTracker — Subscription Tracker">SubTracker — Abonelik Takipçisi</div>
+        <div class="project-desc"
+          data-tr="Netflix, Spotify gibi dijital aboneliklerinizi ve tekrarlayan giderleri yöneten akıllı takip uygulaması. Yaklaşan ödemeleri renk kodlarıyla vurgular, aylık/yıllık maliyet analizini otomatik hesaplar."
+          data-en="Smart tracker for managing digital subscriptions and recurring expenses (Netflix, Spotify etc.). Color-codes upcoming payments and auto-calculates monthly/yearly cost analysis.">
+          Netflix, Spotify gibi dijital aboneliklerinizi ve tekrarlayan giderleri yöneten akıllı takip uygulaması. Yaklaşan ödemeleri renk kodlarıyla vurgular, aylık/yıllık maliyet analizini otomatik hesaplar.
+        </div>
+        <div class="project-features">
+          <span class="feature-item" data-tr="✓ CRUD abonelik yönetimi" data-en="✓ CRUD subscription management">✓ CRUD abonelik yönetimi</span>
+          <span class="feature-item" data-tr="✓ Son 3 gün kırmızı uyarı" data-en="✓ Red alert for last 3 days">✓ Son 3 gün kırmızı uyarı</span>
+          <span class="feature-item" data-tr="✓ Kategori filtrelemesi" data-en="✓ Category filtering">✓ Kategori filtrelemesi</span>
+        </div>
+        <div class="project-stack">
+          <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">C# / SQLite</span>
+        </div>
+        <a href="https://github.com/florexdev/sub-tracker" class="project-link" target="_blank" rel="noopener">github.com → sub-tracker</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-num">// 002</div>
+        <div class="project-name" data-tr="VisualMark — Görsel Yer İmi Yöneticisi" data-en="VisualMark — Visual Bookmark Manager">VisualMark — Görsel Yer İmi Yöneticisi</div>
+        <div class="project-desc"
+          data-tr="Tarayıcı yer imlerini görsel kartlara dönüştüren web aracı. URL girildiğinde sitenin başlığını, açıklamasını ve küçük resmini otomatik çeker. Pinterest benzeri grid tasarımıyla düzenler."
+          data-en="Web tool that turns browser bookmarks into visual cards. Auto-fetches the site title, description and thumbnail from a URL. Organizes them in a Pinterest-style grid layout.">
+          Tarayıcı yer imlerini görsel kartlara dönüştüren web aracı. URL girildiğinde sitenin başlığını, açıklamasını ve küçük resmini otomatik çeker. Pinterest benzeri grid tasarımıyla düzenler.
+        </div>
+        <div class="project-features">
+          <span class="feature-item" data-tr="✓ Otomatik meta veri çekimi" data-en="✓ Auto meta data fetching">✓ Otomatik meta veri çekimi</span>
+          <span class="feature-item" data-tr="✓ Etiket ile kategorizasyon" data-en="✓ Tag-based categorization">✓ Etiket ile kategorizasyon</span>
+          <span class="feature-item" data-tr="✓ Anında arama" data-en="✓ Instant search">✓ Anında arama</span>
+        </div>
+        <div class="project-stack">
+          <span class="tag">HTML</span><span class="tag">CSS Grid</span><span class="tag">JavaScript</span><span class="tag">Node.js</span><span class="tag">Express</span>
+        </div>
+        <a href="https://github.com/florexdev/visual-bookmark" class="project-link" target="_blank" rel="noopener">github.com → visual-bookmark</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-num">// 003</div>
+        <div class="project-name" data-tr="PomoTask — Odaklanma Zamanlayıcısı" data-en="PomoTask — Focus Timer & Task Manager">PomoTask — Odaklanma Zamanlayıcısı</div>
+        <div class="project-desc"
+          data-tr="Pomodoro tekniği ile yapılacaklar listesini birleştiren verimlilik uygulaması. Her seansa görev atanır, süre bitiminde görev otomatik tamamlandı olarak işaretlenir. Kurulum gerektirmez."
+          data-en="Productivity app combining Pomodoro technique with a to-do list. Assign a task to each session; when the timer ends, the task is automatically marked as done. No setup required.">
+          Pomodoro tekniği ile yapılacaklar listesini birleştiren verimlilik uygulaması. Her seansa görev atanır, süre bitiminde görev otomatik tamamlandı olarak işaretlenir. Kurulum gerektirmez.
+        </div>
+        <div class="project-features">
+          <span class="feature-item" data-tr="✓ Özelleştirilebilir zamanlayıcı" data-en="✓ Customizable timer">✓ Özelleştirilebilir zamanlayıcı</span>
+          <span class="feature-item" data-tr="✓ Sesli & görsel bildirim" data-en="✓ Audio & visual alerts">✓ Sesli & görsel bildirim</span>
+          <span class="feature-item" data-tr="✓ LocalStorage ile veri saklama" data-en="✓ LocalStorage persistence">✓ LocalStorage ile veri saklama</span>
+        </div>
+        <div class="project-stack">
+          <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">LocalStorage</span>
+        </div>
+        <a href="https://github.com/florexdev/pomodoro-task-manager" class="project-link" target="_blank" rel="noopener">github.com → pomodoro-task-manager</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-num">// 004</div>
+        <div class="project-name" data-tr="LocalDrop — Yerel Ağ Pano Paylaşımı" data-en="LocalDrop — Local Network Clipboard">LocalDrop — Yerel Ağ Pano Paylaşımı</div>
+        <div class="project-desc"
+          data-tr="Aynı Wi-Fi ağındaki cihazlar arasında sayfa yenilemeye gerek kalmadan anlık metin ve dosya transferi sağlayan gerçek zamanlı web uygulaması. WebSocket ile sıfır gecikme."
+          data-en="Real-time web app for instant text and file transfer between devices on the same Wi-Fi network — no page refresh needed. Zero latency via WebSockets.">
+          Aynı Wi-Fi ağındaki cihazlar arasında sayfa yenilemeye gerek kalmadan anlık metin ve dosya transferi sağlayan gerçek zamanlı web uygulaması. WebSocket ile sıfır gecikme.
+        </div>
+        <div class="project-features">
+          <span class="feature-item" data-tr="✓ Gerçek zamanlı WebSocket" data-en="✓ Real-time WebSocket">✓ Gerçek zamanlı WebSocket</span>
+          <span class="feature-item" data-tr="✓ Sürükle-bırak dosya paylaşımı" data-en="✓ Drag & drop file sharing">✓ Sürükle-bırak dosya paylaşımı</span>
+          <span class="feature-item" data-tr="✓ Kurulum gerektirmeyen istemci" data-en="✓ No client install needed">✓ Kurulum gerektirmeyen istemci</span>
+        </div>
+        <div class="project-stack">
+          <span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Socket.io</span><span class="tag">HTML</span><span class="tag">CSS</span>
+        </div>
+        <a href="https://github.com/florexdev/local-drop" class="project-link" target="_blank" rel="noopener">github.com → local-drop</a>
+      </div>
+
+    </div>
+
+    <p class="projects-note">
+      <span data-tr="Daha fazlası için →" data-en="See more on →">Daha fazlası için →</span>
+      <a href="https://github.com/florexdev" target="_blank" rel="noopener">GitHub</a>
+    </p>
+  </section>
+
+  <section id="contact">
+    <div class="section-label" style="text-align:center">// 05 — <span data-tr="iletişim" data-en="contact">iletişim</span></div>
+    <div class="section-title" style="text-align:center">
+      <span data-tr="Staj " data-en="Internship ">Staj </span><span class="accent2" data-tr="Başvurusu" data-en="Applications">Başvurusu</span>
+    </div>
+
+    <div class="contact-box reveal">
+      <p data-tr="Şu an staj fırsatları arıyorum. Frontend veya masaüstü uygulama geliştirme alanında staj imkânınız varsa benimle iletişime geçebilirsiniz." data-en="I'm currently looking for internship opportunities. If you have an opening in frontend or desktop application development, feel free to get in touch.">
+        Şu an staj fırsatları arıyorum. Frontend veya masaüstü uygulama geliştirme alanında staj imkânınız varsa benimle iletişime geçebilirsiniz.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:florexdev@florexdev.com.tr" class="btn btn-primary">
+          <span data-tr="✉ E-Posta Gönder" data-en="✉ Send Email">✉ E-Posta Gönder</span>
+        </a>
+        <a href="https://github.com/florexdev" target="_blank" rel="noopener" class="btn btn-outline">
+          <span data-tr="GitHub Profilim" data-en="My GitHub">GitHub Profilim</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2025 florexdev.com.tr</span>
+    <span data-tr="Bilecik Şeyh Edebali Üniversitesi · Söğüt MYO" data-en="Bilecik ŞEÜ · Söğüt MYO">Bilecik Şeyh Edebali Üniversitesi · Söğüt MYO</span>
+  </footer>
+
+  <script src="js/lang.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
