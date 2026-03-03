@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+// AIzaSyBr0n9E_SP3WOwvDxnTVpy8-ZZCMTc72g4
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GemiBet — AI Kupon Üretici</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#08090f; --s1:#0f1118; --s2:#161923; --s3:#1d2235;
+  --low:#00c896; --low-bg:rgba(0,200,150,0.08); --low-border:rgba(0,200,150,0.25);
+  --mid:#f59e0b; --mid-bg:rgba(245,158,11,0.08); --mid-border:rgba(245,158,11,0.25);
+  --high:#ef4444; --high-bg:rgba(239,68,68,0.08); --high-border:rgba(239,68,68,0.25);
+  --text:#e2e8f0; --muted:#4b5578; --muted2:#6b7a99;
+  --border:rgba(255,255,255,0.06);
+  --accent:#6366f1; --accent-soft:rgba(99,102,241,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(99,102,241,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 10% 10%,rgba(99,102,241,0.06) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 90% 90%,rgba(0,200,150,0.04) 0%,transparent 60%);pointer-events:none;z-index:0;}
+
+header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;background:rgba(8,9,15,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+.logo{font-size:21px;font-weight:900;letter-spacing:-0.5px;display:flex;align-items:center;gap:10px;}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),#818cf8);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.logo-text span{color:var(--accent);}
+.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.chip{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;letter-spacing:0.5px;}
+.chip-a{color:var(--accent);background:var(--accent-soft);border:1px solid rgba(99,102,241,0.3);}
+.chip-m{color:var(--muted2);background:var(--s2);border:1px solid var(--border);}
+.icon-btn{background:var(--s2);border:1px solid var(--border);color:var(--muted2);padding:5px 12px;border-radius:8px;font-size:11px;cursor:pointer;transition:all 0.2s;font-family:'Outfit',sans-serif;}
+.icon-btn:hover{border-color:var(--accent);color:var(--text);}
+.icon-btn.connected{border-color:var(--low-border);color:var(--low);}
+
+.wrapper{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:32px 20px 80px;}
+
+.hero{text-align:center;padding:40px 0 32px;}
+.hero-ey{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(99,102,241,0.2);padding:4px 12px;border-radius:20px;margin-bottom:18px;}
+.hero h1{font-size:clamp(32px,5.5vw,56px);font-weight:900;line-height:1.06;letter-spacing:-2px;margin-bottom:12px;}
+.hero h1 .grad{background:linear-gradient(135deg,var(--accent),#a78bfa,var(--low));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{font-size:14px;color:var(--muted2);max-width:480px;margin:0 auto;line-height:1.7;}
+
+.steps{display:flex;background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:28px;}
+.step{flex:1;padding:12px 14px;display:flex;align-items:center;gap:8px;border-right:1px solid var(--border);}
+.step:last-child{border-right:none;}
+.step-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.step.done .step-num{background:var(--low-bg);color:var(--low);border:1px solid var(--low-border);}
+.step.active .step-num{background:var(--accent-soft);color:var(--accent);border:1px solid rgba(99,102,241,0.3);}
+.step.pending .step-num{background:var(--s2);color:var(--muted);border:1px solid var(--border);}
+.step-text{font-size:11px;font-weight:600;color:var(--muted2);}
+.step.done .step-text{color:var(--low);}
+.step.active .step-text{color:var(--text);}
+@media(max-width:500px){.steps{flex-direction:column;}.step{border-right:none;border-bottom:1px solid var(--border);}}
+
+.card{background:var(--s1);border:1px solid var(--border);border-radius:18px;padding:26px 28px;margin-bottom:20px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),#818cf8,var(--low));}
+.sec-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-bottom:16px;display:flex;align-items:center;gap:7px;}
+.sec-label::before{content:'';width:3px;height:12px;background:var(--accent);border-radius:2px;}
+
+.cfg-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;}
+@media(max-width:600px){.cfg-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:380px){.cfg-grid{grid-template-columns:1fr;}}
+.fg{display:flex;flex-direction:column;gap:6px;}
+.fl{font-size:11px;font-weight:600;color:var(--muted2);letter-spacing:0.5px;}
+.fi{background:var(--s2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;outline:none;transition:all 0.2s;width:100%;}
+.fi:focus{border-color:var(--accent);background:var(--s3);}
+
+.leagues-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px;margin-bottom:20px;}
+.lcb{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:8px 11px;cursor:pointer;transition:all 0.2s;user-select:none;}
+.lcb:hover{border-color:rgba(99,102,241,0.3);}
+.lcb.on{border-color:rgba(99,102,241,0.35);background:var(--accent-soft);}
+.lcb input{display:none;}
+.lcb-box{width:15px;height:15px;border-radius:3px;border:1.5px solid var(--muted);display:flex;align-items:center;justify-content:center;font-size:9px;transition:all 0.2s;flex-shrink:0;}
+.lcb.on .lcb-box{background:var(--accent);border-color:var(--accent);color:#fff;}
+.lcb-txt{font-size:11px;font-weight:600;color:var(--muted2);}
+.lcb.on .lcb-txt{color:var(--text);}
+
+.risk-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;}
+@media(max-width:480px){.risk-grid{grid-template-columns:1fr;}}
+.ro{border:1px solid var(--border);border-radius:11px;padding:14px;cursor:pointer;transition:all 0.2s;background:var(--s2);user-select:none;}
+.ro input{display:none;}
+.ro.on{border-color:var(--rc);background:var(--rbg);}
+.ro.on .rn{color:var(--rc);}
+.ro.on .rr{color:var(--rc);}
+.ro.low{--rc:var(--low);--rbg:var(--low-bg);}
+.ro.mid{--rc:var(--mid);--rbg:var(--mid-bg);}
+.ro.high{--rc:var(--high);--rbg:var(--high-bg);}
+.ri{font-size:20px;margin-bottom:5px;}
+.rn{font-size:12px;font-weight:700;margin-bottom:2px;transition:color 0.2s;}
+.rd{font-size:10px;color:var(--muted2);line-height:1.4;margin-bottom:3px;}
+.rr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);transition:color 0.2s;}
+
+.odds-status{background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:11px 15px;margin-bottom:14px;display:flex;align-items:center;gap:9px;font-size:12px;}
+.os-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.os-dot.loading{background:var(--mid);animation:pulse 1s infinite;}
+.os-dot.ok{background:var(--low);}
+.os-dot.err{background:var(--high);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.os-txt{color:var(--muted2);font-size:12px;flex:1;}
+.os-txt b{color:var(--text);}
+.fetch-btn{margin-left:auto;background:none;border:1px solid var(--border);color:var(--muted2);padding:4px 11px;border-radius:6px;font-size:10px;cursor:pointer;transition:all 0.2s;font-family:'Outfit',sans-serif;white-space:nowrap;}
+.fetch-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.gen-btn{width:100%;background:linear-gradient(135deg,var(--accent),#818cf8);color:#fff;border:none;border-radius:11px;padding:15px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:9px;}
+.gen-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 28px rgba(99,102,241,0.4);}
+.gen-btn:disabled{opacity:0.35;cursor:not-allowed;}
+.bsp{width:17px;height:17px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:none;}
+.gen-btn.loading .bl{display:none;}
+.gen-btn.loading .bsp{display:block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.err-box{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:9px;padding:12px 16px;color:var(--high);font-size:12px;line-height:1.6;display:none;margin-bottom:14px;}
+
+.live-card{background:var(--s1);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px;display:none;}
+.live-head{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.live-title{font-size:12px;font-weight:700;}
+.live-cnt{font-size:10px;color:var(--low);background:var(--low-bg);border:1px solid var(--low-border);padding:2px 8px;border-radius:20px;}
+.live-list{max-height:260px;overflow-y:auto;}
+.live-row{display:grid;grid-template-columns:1fr 56px 56px 56px 80px;gap:8px;align-items:center;padding:9px 18px;border-bottom:1px solid var(--border);font-size:11px;}
+.live-row:last-child{border-bottom:none;}
+.lt{font-weight:600;font-size:12px;}
+.ll{color:var(--muted2);font-size:10px;}
+.lo{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--muted2);text-align:center;}
+.lo span{display:block;font-size:8px;font-weight:400;color:var(--muted);}
+.ltime{font-size:10px;color:var(--muted);text-align:right;}
+
+.results-section{display:none;}
+.res-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.res-title{font-size:19px;font-weight:800;letter-spacing:-0.5px;}
+.res-meta{font-size:11px;color:var(--muted2);}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;}
+
+.cc{border-radius:14px;border:1px solid var(--border);overflow:hidden;background:var(--s1);transition:transform 0.2s;animation:fu 0.4s ease both;}
+.cc:nth-child(2){animation-delay:.1s;} .cc:nth-child(3){animation-delay:.2s;}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.cc:hover{transform:translateY(-3px);}
+.cc-head{padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.rb{display:flex;align-items:center;gap:7px;}
+.rdot{width:7px;height:7px;border-radius:50%;}
+.rb.low .rdot{background:var(--low);}
+.rb.low .rbl{color:var(--low);}
+.rb.mid .rdot{background:var(--mid);}
+.rb.mid .rbl{color:var(--mid);}
+.rb.high .rdot{background:var(--high);}
+.rb.high .rbl{color:var(--high);}
+.rbl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.cto{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;}
+.cc.low .cto{color:var(--low);}
+.cc.mid .cto{color:var(--mid);}
+.cc.high .cto{color:var(--high);}
+
+.cms{padding:12px 20px;}
+.mi{padding:9px 0;border-bottom:1px solid var(--border);}
+.mi:last-child{border-bottom:none;}
+.mr1{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;gap:7px;}
+.mtt{font-size:12px;font-weight:600;flex:1;}
+.mpk{font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace;white-space:nowrap;}
+.cc.low .mpk{background:var(--low-bg);color:var(--low);border:1px solid var(--low-border);}
+.cc.mid .mpk{background:var(--mid-bg);color:var(--mid);border:1px solid var(--mid-border);}
+.cc.high .mpk{background:var(--high-bg);color:var(--high);border:1px solid var(--high-border);}
+.mr2{display:flex;align-items:center;justify-content:space-between;}
+.mm{font-size:9px;color:var(--muted);}
+.mod{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--muted2);}
+
+.cf{padding:13px 20px 16px;border-top:1px solid var(--border);background:var(--s2);}
+.cs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px;}
+.cst{display:flex;flex-direction:column;gap:2px;}
+.csl{font-size:9px;color:var(--muted);letter-spacing:0.5px;}
+.csv{font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.cst.win .csv{color:var(--low);}
+.aib{background:var(--s3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;}
+.aibl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+.aibt{font-size:11px;color:var(--muted2);line-height:1.65;}
+
+.sum-bar{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:18px 24px;display:flex;align-items:center;justify-content:space-around;gap:14px;margin-top:22px;flex-wrap:wrap;}
+.sbi{text-align:center;}
+.sbl{font-size:9px;color:var(--muted);margin-bottom:3px;letter-spacing:0.5px;}
+.sbv{font-size:16px;font-weight:800;font-family:'JetBrains Mono',monospace;}
+.sbv.g{color:var(--low);} .sbv.y{color:var(--mid);} .sbv.r{color:var(--high);}
+.sbd{width:1px;height:30px;background:var(--border);}
+
+.mo{position:fixed;inset:0;z-index:200;background:rgba(8,9,15,0.92);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;animation:fadeIn 0.2s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.mc{background:var(--s1);border:1px solid var(--border);border-radius:18px;padding:34px;max-width:420px;width:90%;position:relative;}
+.mc-x{position:absolute;top:13px;right:13px;background:none;border:none;color:var(--muted);font-size:17px;cursor:pointer;width:27px;height:27px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all 0.2s;}
+.mc-x:hover{color:var(--text);background:var(--s2);}
+.mc-ico{font-size:34px;margin-bottom:12px;}
+.mc h2{font-size:19px;font-weight:800;margin-bottom:7px;}
+.mc p{font-size:12px;color:var(--muted2);line-height:1.7;margin-bottom:20px;}
+.mc-inp{width:100%;background:var(--s2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:12px;outline:none;margin-bottom:9px;transition:border 0.2s;}
+.mc-inp:focus{border-color:var(--accent);}
+.mc-btn{width:100%;background:linear-gradient(135deg,var(--accent),#818cf8);color:#fff;border:none;border-radius:9px;padding:11px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.mc-btn:hover{box-shadow:0 5px 20px rgba(99,102,241,0.4);}
+.mc-lnk{display:block;text-align:center;margin-top:9px;font-size:11px;color:var(--accent);text-decoration:none;}
+.mc-lnk:hover{text-decoration:underline;}
+
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">Gemi<span>Bet</span></div>
+  </div>
+  <div class="header-right">
+    <span class="chip chip-a">gemini-2.5-flash</span>
+    <span class="chip chip-m">📡 The Odds API</span>
+    <button class="icon-btn" id="geminiBtn" onclick="openModal()">🤖 Gemini Key</button>
+  </div>
+</header>
+
+<div class="wrapper">
+  <div class="hero">
+    <div class="hero-ey">✨ Canlı Oranlar · AI Analiz</div>
+    <h1>Akıllı Maç<br><span class="grad">Kupon Üretici</span></h1>
+    <p>The Odds API'den gerçek oranları çek, Gemini 2.5 Flash ile <strong>düşük, orta ve yüksek riskli</strong> kuponları saniyeler içinde oluştur.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step done"   id="step1"><div class="step-num">1</div><div class="step-text">Parametreler</div></div>
+    <div class="step pending" id="step2"><div class="step-num">2</div><div class="step-text">Oranları Çek</div></div>
+    <div class="step pending" id="step3"><div class="step-num">3</div><div class="step-text">Kupon Üret</div></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-label">Kupon Parametreleri</div>
+    <div class="cfg-grid">
+      <div class="fg"><label class="fl">💰 Bahis Miktarı (₺)</label>
+        <input class="fi" type="number" id="betAmount" value="200" min="10"></div>
+      <div class="fg"><label class="fl">⚽ Maç Sayısı / Kupon</label>
+        <input class="fi" type="number" id="matchCount" value="5" min="2" max="12"></div>
+      <div class="fg"><label class="fl">📅 Tarih</label>
+        <input class="fi" type="date" id="matchDate"></div>
+    </div>
+
+    <div class="sec-label">Ligler</div>
+    <div class="leagues-grid" id="leaguesGrid"></div>
+
+    <div class="sec-label">Risk Türleri</div>
+    <div class="risk-grid">
+      <label class="ro low on" id="ro-low">
+        <input type="checkbox" checked onchange="toggleRisk('low', this)">
+        <div class="ri">🛡️</div><div class="rn">Düşük Risk</div>
+        <div class="rd">Favori tahminler, güvenli seçimler</div>
+        <div class="rr">2.0x – 6.0x toplam oran</div>
+      </label>
+      <label class="ro mid on" id="ro-mid">
+        <input type="checkbox" checked onchange="toggleRisk('mid', this)">
+        <div class="ri">⚖️</div><div class="rn">Orta Risk</div>
+        <div class="rd">Dengeli oran-risk dengesi</div>
+        <div class="rr">6x – 25x toplam oran</div>
+      </label>
+      <label class="ro high on" id="ro-high">
+        <input type="checkbox" checked onchange="toggleRisk('high', this)">
+        <div class="ri">🔥</div><div class="rn">Yüksek Risk</div>
+        <div class="rd">Sürpriz sonuçlar, dev kazanç</div>
+        <div class="rr">25x+ toplam oran</div>
+      </label>
+    </div>
+
+    <div class="odds-status">
+      <div class="os-dot loading" id="osDot"></div>
+      <span class="os-txt" id="osTxt">Oranlar henüz çekilmedi — önce oranları çekin</span>
+      <button class="fetch-btn" onclick="fetchOdds()">📡 Oranları Çek</button>
+    </div>
+
+    <div class="err-box" id="errBox"></div>
+
+    <button class="gen-btn" id="genBtn" onclick="generateCoupons()" disabled>
+      <span class="bl">✨ Gemini ile Kupon Üret</span>
+      <div class="bsp"></div>
+    </button>
+  </div>
+
+  <div class="live-card" id="liveCard">
+    <div class="live-head">
+      <div class="live-title">⚽ Çekilen Gerçek Maçlar</div>
+      <span class="live-cnt" id="liveCnt">0 maç</span>
+    </div>
+    <div class="live-list" id="liveList"></div>
+  </div>
+
+  <div class="results-section" id="resSec">
+    <div class="res-head">
+      <div class="res-title">🎯 AI Kuponları</div>
+      <div class="res-meta" id="resMeta"></div>
+    </div>
+    <div class="cg" id="couponsGrid"></div>
+    <div class="sum-bar" id="sumBar"></div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="mo" id="mo" style="display:none;">
+  <div class="mc">
+    <button class="mc-x" onclick="closeModal()">✕</button>
+    <div class="mc-ico">🤖</div>
+    <h2>Gemini API Anahtarı</h2>
+    <p>Google AI Studio'dan ücretsiz API anahtarı alarak Gemini 2.5 Flash modelini kullanabilirsin.</p>
+    <input class="mc-inp" type="password" id="mcInp" placeholder="AIza... buraya yapıştır">
+    <button class="mc-btn" onclick="saveKey()">Kaydet ve Bağlan</button>
+    <a class="mc-lnk" href="https://aistudio.google.com/app/apikey" target="_blank">→ Ücretsiz Gemini API Anahtarı Al</a>
+  </div>
+</div>
+
+<script>
+const ODDS_KEY = 'c1ab3e5f9b5e5b2062e71838cfac1865';
+const ODDS_BASE = 'https://api.the-odds-api.com/v4';
+
+const LEAGUES = [
+  {key:'soccer_epl',              label:'Premier League',    flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},
+  {key:'soccer_spain_la_liga',    label:'La Liga',           flag:'🇪🇸'},
+  {key:'soccer_germany_bundesliga',label:'Bundesliga',       flag:'🇩🇪'},
+  {key:'soccer_italy_serie_a',    label:'Serie A',           flag:'🇮🇹'},
+  {key:'soccer_france_ligue_one', label:'Ligue 1',           flag:'🇫🇷'},
+  {key:'soccer_turkey_super_ligi',label:'Süper Lig',         flag:'🇹🇷'},
+  {key:'soccer_uefa_champs_league',label:'Şampiyonlar Ligi', flag:'🇪🇺'},
+  {key:'soccer_uefa_europa_league',label:'Avrupa Ligi',      flag:'🇪🇺'},
+  {key:'soccer_netherlands_eredivisie',label:'Eredivisie',   flag:'🇳🇱'},
+  {key:'soccer_portugal_primeira_liga',label:'Primeira Liga',flag:'🇵🇹'},
+];
+
+let geminiKey = localStorage.getItem('gemibet_g') || '';
+let selRisks  = new Set(['low','mid','high']);
+let selLeagues= new Set(LEAGUES.map(l=>l.key));
+let liveMatches = [];
+
+// INIT
+window.onload = () => {
+  document.getElementById('matchDate').value = new Date().toISOString().split('T')[0];
+  renderLeagues();
+  if(geminiKey){ markConnected(); }
+  else { setTimeout(()=>openModal(), 600); }
+};
+
+// LEAGUES
+function renderLeagues(){
+  document.getElementById('leaguesGrid').innerHTML = LEAGUES.map(l=>`
+    <label class="lcb on" id="lcb-${l.key}">
+      <input type="checkbox" checked onchange="togLeague('${l.key}', this)">
+      <div class="lcb-box">✓</div>
+      <span style="font-size:13px">${l.flag}</span>
+      <span class="lcb-txt">${l.label}</span>
+    </label>`).join('');
+}
+function togLeague(k, cb){
+  const el=document.getElementById('lcb-'+k);
+  if(!cb.checked){
+    if(selLeagues.size===1){ cb.checked=true; return; }
+    selLeagues.delete(k); el.classList.remove('on');
+    el.querySelector('.lcb-box').textContent='';
+  } else {
+    selLeagues.add(k); el.classList.add('on');
+    el.querySelector('.lcb-box').textContent='✓';
+  }
+}
+
+// RISK
+function toggleRisk(r, cb){
+  const el=document.getElementById('ro-'+r);
+  if(!cb.checked){
+    if(selRisks.size===1){ cb.checked=true; return; }
+    selRisks.delete(r); el.classList.remove('on');
+  } else {
+    selRisks.add(r); el.classList.add('on');
+  }
+}
+
+// MODAL
+function openModal(){
+  document.getElementById('mcInp').value=geminiKey||'';
+  document.getElementById('mo').style.display='flex';
+  setTimeout(()=>document.getElementById('mcInp').focus(),100);
+}
+function closeModal(){ document.getElementById('mo').style.display='none'; }
+function saveKey(){
+  const v=document.getElementById('mcInp').value.trim();
+  if(!v) return;
+  geminiKey=v; localStorage.setItem('gemibet_g',v);
+  markConnected(); closeModal();
+}
+function markConnected(){
+  const b=document.getElementById('geminiBtn');
+  b.textContent='✅ Gemini Bağlı'; b.classList.add('connected');
+}
+document.getElementById('mcInp').addEventListener('keydown',e=>{if(e.key==='Enter')saveKey();});
+document.getElementById('mo').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+// STEP
+function setStep(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('step'+i).className='step '+(i<n?'done':i===n?'active':'pending');
+  });
+}
+
+// FETCH ODDS
+async function fetchOdds(){
+  if(selLeagues.size===0){showErr('En az bir lig seçin.');return;}
+  hideErr(); setStep(2);
+  const dot=document.getElementById('osDot');
+  const txt=document.getElementById('osTxt');
+  dot.className='os-dot loading';
+  txt.innerHTML='<b>Oranlar çekiliyor...</b>';
+  document.getElementById('genBtn').disabled=true;
+
+  const dateVal = document.getElementById('matchDate').value;
+  const from = dateVal+'T00:00:00Z';
+  const to   = dateVal+'T23:59:59Z';
+  const leagues = LEAGUES.filter(l=>selLeagues.has(l.key));
+
+  liveMatches=[];
+  let errs=0;
+
+  for(const lg of leagues){
+    try{
+      // Try with date filter first
+      let url=`${ODDS_BASE}/sports/${lg.key}/odds/?apiKey=${ODDS_KEY}&regions=eu&markets=h2h,totals&oddsFormat=decimal&commenceTimeFrom=${from}&commenceTimeTo=${to}`;
+      let res=await fetch(url);
+      if(!res.ok){errs++;continue;}
+      let data=await res.json();
+
+      // If no matches for date, fall back to upcoming (up to 5)
+      if(data.length===0){
+        url=`${ODDS_BASE}/sports/${lg.key}/odds/?apiKey=${ODDS_KEY}&regions=eu&markets=h2h,totals&oddsFormat=decimal`;
+        res=await fetch(url);
+        if(!res.ok) continue;
+        data=await res.json();
+        data=data.slice(0,5);
+      }
+
+      for(const ev of data){
+        const p=processEv(ev,lg);
+        if(p) liveMatches.push(p);
+      }
+    } catch(e){errs++;}
+  }
+
+  if(liveMatches.length===0){
+    dot.className='os-dot err';
+    txt.innerHTML='<b style="color:var(--high)">Maç bulunamadı.</b> Farklı tarih veya lig deneyin.';
+    showErr('Seçilen liglerde maç verisi bulunamadı. Farklı bir tarih deneyin.');
+    return;
+  }
+
+  dot.className='os-dot ok';
+  txt.innerHTML=`<b style="color:var(--low)">${liveMatches.length} maç yüklendi</b>${errs?' · '+errs+' lig hata':''} — Kupon üretilebilir`;
+  renderLiveTable();
+  document.getElementById('genBtn').disabled = !geminiKey;
+  setStep(3);
+}
+
+function processEv(ev, lg){
+  if(!ev.bookmakers||!ev.bookmakers.length) return null;
+  const bm=ev.bookmakers[0];
+  let h2h=null, tots=null;
+  for(const m of bm.markets){
+    if(m.key==='h2h')    h2h=m;
+    if(m.key==='totals') tots=m;
+  }
+  if(!h2h) return null;
+  const oc=h2h.outcomes;
+  const homeO=oc.find(o=>o.name===ev.home_team)?.price||null;
+  const awayO=oc.find(o=>o.name===ev.away_team)?.price||null;
+  const drawO=oc.find(o=>o.name==='Draw')?.price||null;
+  const ovO  =tots?.outcomes.find(o=>o.name==='Over')?.price||null;
+  const unO  =tots?.outcomes.find(o=>o.name==='Under')?.price||null;
+  const line =tots?.outcomes[0]?.point||2.5;
+  const d    =new Date(ev.commence_time);
+  return {
+    home:ev.home_team, away:ev.away_team,
+    league:lg.label, flag:lg.flag,
+    date:d.toLocaleDateString('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'}),
+    time:d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'}),
+    odds:{'1':homeO,'X':drawO,'2':awayO,[`Ust ${line}`]:ovO,[`Alt ${line}`]:unO}
+  };
+}
+
+function renderLiveTable(){
+  const card=document.getElementById('liveCard');
+  card.style.display='block';
+  document.getElementById('liveCnt').textContent=liveMatches.length+' maç';
+  document.getElementById('liveList').innerHTML=liveMatches.map(m=>`
+    <div class="live-row">
+      <div><div class="lt">${m.home} <span style="color:var(--muted);font-size:9px">vs</span> ${m.away}</div>
+        <div class="ll">${m.flag} ${m.league}</div></div>
+      <div class="lo">${m.odds['1']?.toFixed(2)||'—'}<span>EV</span></div>
+      <div class="lo">${m.odds['X']?.toFixed(2)||'—'}<span>BER</span></div>
+      <div class="lo">${m.odds['2']?.toFixed(2)||'—'}<span>DEP</span></div>
+      <div class="ltime">${m.date}<br>${m.time}</div>
+    </div>`).join('');
+}
+
+// GENERATE
+async function generateCoupons(){
+  if(!geminiKey){openModal();return;}
+  if(liveMatches.length===0){showErr('Önce oranları çekin!');return;}
+  const bet  =parseFloat(document.getElementById('betAmount').value)||200;
+  const cnt  =parseInt(document.getElementById('matchCount').value)||5;
+  const risks=Array.from(selRisks);
+  hideErr();
+
+  const btn=document.getElementById('genBtn');
+  btn.classList.add('loading'); btn.disabled=true;
+  document.getElementById('resSec').style.display='none';
+
+  const mLines=liveMatches.map(m=>{
+    const o=Object.entries(m.odds).filter(([,v])=>v!=null).map(([k,v])=>`${k}:${v.toFixed(2)}`).join(' | ');
+    return `${m.home} vs ${m.away} [${m.league}] ${m.date} ${m.time} => ${o}`;
+  }).join('\n');
+
+  const rDesc={
+    low:'Dusuk Risk: toplam oran 2.0-6.0x arasi, favori ev sahibi (1) veya guclu deplasman (2), Alt secenegi, dusuk oranli guvenli tahminler',
+    mid:'Orta Risk: toplam oran 6-25x arasi, kimi zaman X veya Ust kullan, dengeli oran-risk orani',
+    high:'Yuksek Risk: toplam oran 25x uzerinde, surpriz tahminler, X ve yuksek oranli 2 secenekleri, Ust kombinasyonlari'
+  };
+
+  const prompt=`Sen profesyonel futbol bahis analistisin. Asagidaki GERCEK mac listesinden ${cnt} mac sec ve kupon olustur.
+
+GERCEK MACLAR:
+${mLines}
+
+PARAMETRELER:
+- Bahis: ${bet} TL her kupon icin
+- Kupon basi mac sayisi: ${cnt}
+- Uretilecek kuponlar: ${risks.join(', ')}
+
+KURALLAR:
+${risks.map(r=>rDesc[r]).join('\n')}
+- Sadece yukaridaki listeden mac sec
+- pick degeri sadece bu seceneklerden biri olmali: "1", "X", "2", veya "Ust X.X" / "Alt X.X" (gercek oran anahtarini kullan)
+- odd: gercek listeden al, tam sayi degil ondalikli
+- total_odd: carpim hesapla
+- net_win: ${bet} x total_odd x 0.82
+- ai_summary: 2 cumle Turkce, ozel karakter YOK, tirnak YOK
+- reason: max 5 kelime Turkce, ozel karakter YOK
+
+SADECE JSON dondur, baska hicbir sey yazma, markdown KULLANMA:
+{"coupons":[{"risk":"low","matches":[{"home":"A","away":"B","league":"L","date":"01.01.2026","time":"20:00","pick":"1","odd":1.85,"reason":"ev sahibi form iyice"},{"home":"C","away":"D","league":"L","date":"01.01.2026","time":"21:00","pick":"Alt 2.5","odd":1.72,"reason":"defansif oynayan takimlar"}],"total_odd":3.18,"net_win":521.52,"ai_summary":"Dusuk riskli guvenli secimler yapildi. Favoriler tercih edildi."},{"risk":"mid","matches":[{"home":"E","away":"F","league":"L","date":"01.01.2026","time":"19:00","pick":"X","odd":3.20,"reason":"dengeli guc orani"},{"home":"G","away":"H","league":"L","date":"01.01.2026","time":"22:00","pick":"Ust 2.5","odd":1.95,"reason":"gol atan takimlar"}],"total_odd":6.24,"net_win":1023.36,"ai_summary":"Orta riskli dengeli kupon hazırlandi. Iyi deger sunuyor."},{"risk":"high","matches":[{"home":"I","away":"J","league":"L","date":"01.01.2026","time":"18:00","pick":"2","odd":4.50,"reason":"surpriz deplasman tahmini"},{"home":"K","away":"M","league":"L","date":"01.01.2026","time":"20:30","pick":"X","odd":3.80,"reason":"beklenmedik beraberlik ihtimali"}],"total_odd":17.10,"net_win":2800.44,"ai_summary":"Yuksek riskli surpriz kupon. Gercek maclardan olusturuldu."}]}
+
+Simdi gercek ${cnt} maclik kuponlari olustur:`;
+
+  try{
+    const res=await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+      {method:'POST',headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.55,maxOutputTokens:8192}})}
+    );
+    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'HTTP '+res.status);}
+    const data=await res.json();
+    let raw=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+
+    // Aggressive clean
+    raw=raw.replace(/```json/gi,'').replace(/```/g,'').trim();
+    const fi=raw.indexOf('{'),li=raw.lastIndexOf('}');
+    if(fi!==-1&&li!==-1) raw=raw.slice(fi,li+1);
+    raw=raw
+      .replace(/[\u2018\u2019\u201A\u201B]/g,"'")
+      .replace(/[\u201C\u201D\u201E\u201F]/g,'"')
+      .replace(/,(\s*[}\]])/g,'$1')          // trailing commas
+      .replace(/([{,]\s*)(\w+)\s*:/g,'$1"$2":'); // unquoted keys
+
+    let parsed;
+    try{ parsed=JSON.parse(raw); }
+    catch(e){
+      // Try bracket extraction
+      const arr=raw.match(/"coupons"\s*:\s*(\[[\s\S]*?\])\s*\}$/);
+      if(arr){ try{parsed={coupons:JSON.parse(arr[1])};}catch(e2){throw new Error('JSON ayrıştırılamadı. Tekrar deneyin.');} }
+      else throw new Error('Gemini geçersiz yanıt döndürdü. Tekrar deneyin.');
+    }
+
+    renderResults(parsed.coupons||[], bet);
+  }catch(err){ showErr('Hata: '+err.message); }
+  finally{ btn.classList.remove('loading'); btn.disabled=false; }
+}
+
+// RENDER
+const RCfg={low:{label:'Düşük Risk',icon:'🛡️'},mid:{label:'Orta Risk',icon:'⚖️'},high:{label:'Yüksek Risk',icon:'🔥'}};
+function renderResults(coupons,bet){
+  const sec=document.getElementById('resSec');
+  sec.style.display='block';
+  const dv=document.getElementById('matchDate').value;
+  document.getElementById('resMeta').textContent=
+    new Date(dv).toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})
+    +' · '+coupons.length+' kupon · '+liveMatches.length+' gerçek maçtan';
+
+  document.getElementById('couponsGrid').innerHTML=coupons.map(c=>{
+    const rc=RCfg[c.risk]||RCfg.low;
+    const ms=(c.matches||[]).map(m=>`
+      <div class="mi">
+        <div class="mr1">
+          <div class="mtt">${m.home} <span style="color:var(--muted);font-size:9px">vs</span> ${m.away}</div>
+          <div class="mpk">${m.pick}</div>
+        </div>
+        <div class="mr2">
+          <div class="mm">${m.flag||'⚽'} ${m.league} · ${m.date} ${m.time}${m.reason?' · '+m.reason:''}</div>
+          <div class="mod">@${(+m.odd).toFixed(2)}</div>
+        </div>
+      </div>`).join('');
+    return `<div class="cc ${c.risk}">
+      <div class="cc-head">
+        <div class="rb ${c.risk}"><div class="rdot"></div><div class="rbl">${rc.icon} ${rc.label}</div></div>
+        <div class="cto">${(+c.total_odd).toFixed(2)}x</div>
+      </div>
+      <div class="cms">${ms}</div>
+      <div class="cf">
+        <div class="cs">
+          <div class="cst"><div class="csl">BAHİS</div><div class="csv">${bet.toLocaleString('tr-TR')}₺</div></div>
+          <div class="cst win"><div class="csl">NET KAZANÇ</div><div class="csv">${(+c.net_win).toLocaleString('tr-TR',{maximumFractionDigits:0})}₺</div></div>
+        </div>
+        <div class="aib"><div class="aibl">✨ Gemini Analizi</div><div class="aibt">${c.ai_summary||'—'}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const ws=coupons.map(c=>+c.net_win), os=coupons.map(c=>+c.total_odd);
+  document.getElementById('sumBar').innerHTML=`
+    <div class="sbi"><div class="sbl">TOPLAM YATIRIM</div><div class="sbv">${(bet*coupons.length).toLocaleString('tr-TR')}₺</div></div>
+    <div class="sbd"></div>
+    <div class="sbi"><div class="sbl">MIN. KAZANÇ</div><div class="sbv g">${Math.min(...ws).toLocaleString('tr-TR',{maximumFractionDigits:0})}₺</div></div>
+    <div class="sbd"></div>
+    <div class="sbi"><div class="sbl">MAKS. KAZANÇ</div><div class="sbv r">${Math.max(...ws).toLocaleString('tr-TR',{maximumFractionDigits:0})}₺</div></div>
+    <div class="sbd"></div>
+    <div class="sbi"><div class="sbl">ORT. ORAN</div><div class="sbv y">${(os.reduce((a,v)=>a+v,0)/os.length).toFixed(2)}x</div></div>
+    <div class="sbd"></div>
+    <div class="sbi"><div class="sbl">KUPON</div><div class="sbv">${coupons.length}</div></div>`;
+
+  sec.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function showErr(m){const e=document.getElementById('errBox');e.textContent='⚠ '+m;e.style.display='block';}
+function hideErr(){document.getElementById('errBox').style.display='none';}
+</script>
+</body>
+</html>

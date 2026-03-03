@@ -19,8 +19,14 @@ function applyLang(lang) {
 
       if (trText === null || enText === null) return;
 
-      if (el.children.length === 0) {
-        el.textContent = lang === 'tr' ? trText : enText;
+      // choose content based on language
+      const chosen = lang === 'tr' ? trText : enText;
+
+      // if translation contains HTML tags, use innerHTML so markup is preserved
+      if (/<[a-z][\s\S]*>/i.test(chosen)) {
+        el.innerHTML = chosen;
+      } else {
+        el.textContent = chosen;
       }
     });
 

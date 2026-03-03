@@ -84,6 +84,28 @@
 
   reveals.forEach(function (el) { revealObserver.observe(el); });
 
+  // Triple-click feature for Söğüt MYO
+  var sogutMyo = document.getElementById('sogutMyo');
+  var clickCount = 0;
+  var clickTimer = null;
+
+  if (sogutMyo) {
+    sogutMyo.style.cursor = 'pointer';
+    sogutMyo.addEventListener('click', function () {
+      clickCount++;
+      
+      if (clickCount === 3) {
+        window.location.href = 'mac.html';
+        clickCount = 0;
+      }
+      
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(function () {
+        clickCount = 0;
+      }, 500);
+    });
+  }
+
   var hamburger  = document.getElementById('hamburger');
   var mobileMenu = document.getElementById('mobileMenu');
   var mobileLinks = document.querySelectorAll('.mobile-link');
