@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>florex@archlinux: ~</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white vh-100 vw-100 overflow-hidden m-0 p-0 font-monospace selection-primary">
+
+    <canvas id="star-canvas" class="position-fixed top-0 start-0 w-100 h-100 z-0 pe-none"></canvas>
+    <canvas id="matrix-canvas" class="position-fixed top-0 start-0 w-100 h-100 z-50 pe-none d-none"></canvas>
+    <div class="crt-overlay"></div>
+
+    <div class="position-relative z-10 w-100 h-100 container-fluid p-0">
+        <div class="row h-100 m-0">
+            <div class="col-md-5 h-100 d-none d-md-flex align-items-end justify-content-center pe-none">
+                <img src="mikasa.png" alt="Burak" class="vh-100 object-contain object-bottom drop-shadow-glow" style="opacity: 0.8;">
+            </div>
+
+            <div class="col-md-7 h-100 d-flex align-items-center justify-content-center p-4">
+                <div id="terminal-window" class="bg-glass border border-light border-opacity-25 rounded-5 shadow-5-strong backdrop-blur-sm">
+                    
+                    <div id="terminal-header" class="bg-glass-header px-4 py-2 d-flex align-items-center justify-content-between border-bottom border-light border-opacity-10 user-select-none">
+                        <div class="d-flex align-items-center gap-2 text-white">
+                            <i class="fas fa-terminal fa-sm text-primary"></i>
+                            <span class="fw-bold glitch-text small text-monospace" data-text="florex@archlinux:~">florex@archlinux:~</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <div class="window-dot bg-warning opacity-50 hover-opacity-100 cursor-pointer"></div>
+                            <div class="window-dot bg-success opacity-50 hover-opacity-100 cursor-pointer"></div>
+                            <div class="window-dot bg-danger opacity-50 hover-opacity-100 cursor-pointer"></div>
+                        </div>
+                    </div>
+
+                    <div id="terminal-body" class="p-4 overflow-y-auto text-light custom-scrollbar bg-black-opacity" style="height: 550px;">
+                        <div id="output"></div>
+                        <div class="d-flex align-items-center gap-2 mt-2">
+                            <span class="text-success fw-bold">➜</span>
+                            <input id="command-input" type="text" class="bg-transparent border-0 outline-none text-white w-100 p-0 shadow-none font-monospace" autofocus autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
